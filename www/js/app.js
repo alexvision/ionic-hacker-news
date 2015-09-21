@@ -30,14 +30,17 @@ angular.module('hn', ['ionic', 'hn.controllers', 'hn.services'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-
+    .state('stories', {
+      url: '/stories',
+      templateUrl: 'templates/top-stories.html',
+      controller: 'StoryCtrl'
+    })
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
   })
-
   // Each tab has its own nav history stack:
 
   // .state('tab.dash', {
@@ -80,6 +83,6 @@ angular.module('hn', ['ionic', 'hn.controllers', 'hn.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/chats');
+  $urlRouterProvider.otherwise('/stories');
 
 });

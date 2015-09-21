@@ -1,5 +1,13 @@
 angular.module('hn.controllers', [])
 
+.controller('StoryCtrl', function ($scope, Stories) {
+  // $scope.stories = Stories.fetchTopStories();
+  $scope.stories = Stories.all();
+  $scope.comments = function(story) {
+    Stories.comments(story);
+  };
+})
+
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {

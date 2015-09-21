@@ -1,0 +1,15 @@
+<ion-view view-title="HN">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="story in stories" type="item-text-wrap" href="{{story.url}}">
+        <h2>{{story.title}}</h2>
+        <p>By: {{story.by}} | Votes: {{story.score}} | URL: {{story.url}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-balanced" ng-click="comments(story)">
+          Comments
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

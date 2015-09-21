@@ -1,12 +1,93 @@
 angular.module('hn.services', ["firebase"])
 
-// .factory('Chats', function($firebaseObject){
-//   var ref = new Firebase("https://hacker-news.firebaseio.com/v0");
-//   console.log($firebaseArray(ref));
+// .factory('Stories', function($firebaseObject, $firebaseArray) {
+//   var APIUrl = "https://hacker-news.firebaseio.com/v0",
+//       topstoriesIndex,
+//       topStories = []
+
+
+//   var getItem = function(storyId) {
+//       return new Firebase(APIUrl).child("item").child(storyId)
+//       // var syncedItem = item.$asObject()
+//       // syncedItem.$loaded()
+//       //   .then(function(data){
+//       //     return data;
+//       //   })
+//   };
+
+//   var fetchTopList = function(){
+//     var ref = new Firebase(APIUrl).child('topstories');
+//     topstoriesIndex = $firebaseObject(ref)
+//     console.log(topstoriesIndex)
+//   };
+//   //fetchTopList();
+  
+
+//   var fetchTopStories = function(callback){
+//     //grab an updated list of stories
+//     var topStories = [];
+//     var ref = new Firebase(APIUrl).child('topstories');
+//     ref.on('value', function(update){
+//        for(var i = 0; i < 30; i++) {
+//         var story = getItem(update.val()[i])
+//         story.on('value', function(storyVal){
+//           topStories[i] = storyVal.val();
+//           console.log("Individual story print:", topStories[i]);
+//         })
+//        }
+//        // update.val().forEach(function (storyId, index) {
+//        //   var storyElement = getItem(storyId);
+//        //      storyElement.on('value', function(storyVal){
+//        //        topStories[index] = storyVal.val();
+//        //        //console.log(storyVal.val());
+//        //      })
+//        // })
+//     callback(topStories)
+//     })
+//   }
+//   console.log(topStories)
+
+
+
+//   return {
+//     all: function() {
+//       console.log("All called")
+//       //return topStories;
+//       fetchTopStories(function(stories){
+//         console.log("Returning")
+//         return stories;
+//       })
+//     },
+//     redirect: function(storyId) {
+//       topStories.splice(topStories.indexOf(story), 1);
+//     },
+//     get: function(storyId) {
+//       for (var i = 0; i < topStories.length; i++) {
+//         if (topStories[i].$id === parseInt($id)) {
+//           return topStories[i];
+//         }
+//       }
+//       return null;
+//     },
+//     // fetchTopStories: function(storyId){
+//     // //grab an updated list of stories
+//     //   var ref = new Firebase(APIUrl).child('topstories');
+//     //   ref.$loaded()
+//     //   .then(function(update){
+//     //    for(var i = 0; i < 30; i++) {
+//     //     var story = getItem(update.val()[i])
+//     //     story.on('value', function(storyVal){
+//     //       topStories[i] = storyVal.val();
+//     //       console.log("Individual story print:", topStories[i]);
+//     //     })
+//     //    console.log('RETURNING!!!!!!')
+//     //    }
+//     //   })
+//     //    return topStories;
+//     // }
+//   };
 // })
-
-
-.factory('Chats', function($firebaseObject, $firebaseArray) {
+.factory('Stories', function($firebaseObject, $firebaseArray) {
   var APIUrl = "https://hacker-news.firebaseio.com/v0",
       topstoriesIndex,
       topStories = []
@@ -21,19 +102,17 @@ angular.module('hn.services', ["firebase"])
     topstoriesIndex = $firebaseObject(ref)
     console.log(topstoriesIndex)
   };
-  fetchTopList();
+  //fetchTopList();
   
 
   var fetchTopStories = function(storyId){
     //grab an updated list of stories
     var ref = new Firebase(APIUrl).child('topstories');
     ref.on('value', function(update){
-       update.val().forEach(function (storyID, index) {
-         var storyElement = getItem(storyID);
+       update.val().forEach(function (storyId, index) {
+         var storyElement = getItem(storyId);
             storyElement.on('value', function(storyVal){
               topStories[index] = storyVal.val();
-              console.log(topStories[index]);
-              //console.log(storyVal.val());
             })
        })
     })
@@ -45,8 +124,8 @@ angular.module('hn.services', ["firebase"])
     all: function() {
       return topStories;
     },
-    remove: function(topStory) {
-      topStories.splice(topStories.indexOf(topStory), 1);
+    comments: function(storyId) {
+      console.log("Implement Coments")
     },
     get: function(storyId) {
       for (var i = 0; i < topStories.length; i++) {

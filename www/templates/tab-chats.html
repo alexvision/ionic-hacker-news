@@ -1,7 +1,7 @@
 <ion-view view-title="HN">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="{{chat.url}}">
         <h2>{{chat.title}}</h2>
         <p>By: {{chat.by}} | Votes: {{chat.score}} | URL: {{chat.url}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>

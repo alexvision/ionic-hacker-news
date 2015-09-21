@@ -8,14 +8,43 @@ angular.module('hn.services', ["firebase"])
 
 .factory('Chats', function($firebaseObject, $firebaseArray) {
   var APIUrl = "https://hacker-news.firebaseio.com/v0",
-      topStories  = []
+      topstoriesIndex,
+      topStories = [],
+      storyId = 10253963;
 
-  var ref = new Firebase(APIUrl).child('topstories');
-  var item = $firebaseArray(ref)
-  console.log(item)
+  var getRef = function(storyId) {
+      return new Firebase(APIUrl).child("item").child(storyId);
+  };
+
+  var fetchTopList = function(){
+    var ref = new Firebase(APIUrl).child('topstories');
+    topstoriesIndex = $firebaseObject(ref)
+    console.log(topstoriesIndex)
+  };
+  fetchTopList();
+  
+
+  var fetchTopStories = function(storyId){
+    //grab an updated list of stories
+    var ref = new Firebase(APIUrl).child('topstories');
+    ref.on('value', function(update){
+       update.val().forEach(function (storyID, index) {
+         var storyRef = getRef(storyID);
+            storyRef.on('value', function(storyVal){
+              topStories[index] = storyVal.val();
+              console.log(topStories[index]);
+              //console.log(storyVal.val());
+            })
+       })
+    })
+
+  }()
+  console.log(topStories)
 
 
-  var chats = [{
+
+  var chats = topStories
+  var oldchats = [{
     id: 0,
     name: 'Ben Sparrow',
     lastText: 'You on your way?',
@@ -51,7 +80,7 @@ angular.module('hn.services', ["firebase"])
     },
     get: function(chatId) {
       for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
+        if (chats[i].$id === parseInt($id)) {
           return chats[i];
         }
       }

@@ -8,7 +8,16 @@ angular.module('hn.controllers', [])
   };
 })
 
-.controller('DashCtrl', function($scope) {})
+.controller('CommentsCtrl', ["$scope", "$firebaseObject",
+  function ($scope, $firebaseObject) {
+    var ref = $firebaseObject('https://hacker-news.firebaseio.com/v0');
+    var obj = $firebaseObject(ref);
+
+    obj.$loaded().then(function() {
+        console.log("loaded record:", obj.$id, obj.someOtherKeyInData);
+      })
+
+}])
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -27,10 +36,4 @@ angular.module('hn.controllers', [])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
 });

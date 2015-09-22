@@ -3,8 +3,7 @@
     <ion-list>
       <ion-item class="item-remove-animate item-icon-right" ng-repeat="story in stories" type="item-text-wrap" href="{{story.url}}">
         <h2>{{story.title}}</h2>
-        <p>By: {{story.by}} | Comments: {{story.descendants}} | Votes: {{story.score}}</p>
-        <p>{{story.url}}</p>
+        <p>By: {{story.by}} | Comments: {{story.decendants}} | Votes: {{story.score}} | URL: {{story.url}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <ion-option-button class="button-balanced" ng-click="comments(story)">

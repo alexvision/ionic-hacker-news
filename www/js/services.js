@@ -87,7 +87,7 @@ angular.module('hn.services', ["firebase"])
 //     // }
 //   };
 // })
-.factory('Stories', function($firebaseObject, $firebaseArray) {
+.factory('Stories', function ($firebaseObject, $firebaseArray) {
   var APIUrl = "https://hacker-news.firebaseio.com/v0",
       topstoriesIndex,
       topStories = []
@@ -96,44 +96,32 @@ angular.module('hn.services', ["firebase"])
   var getItem = function(storyId) {
       return new Firebase(APIUrl).child("item").child(storyId);
   };
-
-  var fetchTopList = function(){
-    var ref = new Firebase(APIUrl).child('topstories');
-    topstoriesIndex = $firebaseObject(ref)
-    console.log(topstoriesIndex)
-  };
-  //fetchTopList();
   
 
   var fetchTopStories = function(storyId){
     //grab an updated list of stories
     var ref = new Firebase(APIUrl).child('topstories');
     ref.on('value', function(update){
-       update.val().forEach(function (storyId, index) {
-         var storyElement = getItem(storyId);
-            storyElement.on('value', function(storyVal){
-              topStories[index] = storyVal.val();
-            })
-       })
+      update.val().forEach(function (storyId, index) {
+        var storyElement = getItem(storyId);
+        storyElement.on('value', function(storyVal){
+          topStories[index] = storyVal.val();
+          console.log("Individual Story", storyVal.val());
+        })
+      })
     })
+  }
+  fetchTopStories()
+  
 
-  }()
-  console.log(topStories)
 
   return {
     all: function() {
+      console.log('calling all')
       return topStories;
     },
     comments: function(storyId) {
       console.log("Implement Coments")
-    },
-    get: function(storyId) {
-      for (var i = 0; i < topStories.length; i++) {
-        if (topStories[i].$id === parseInt($id)) {
-          return topStories[i];
-        }
-      }
-      return null;
     }
   };
 });
